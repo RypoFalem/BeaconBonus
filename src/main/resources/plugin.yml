@@ -1,0 +1,10 @@
+name: BeaconBonus
+main: io.github.rypofalem.beaconbonus.BeaconBonusPlugin
+version: 1.10.2-1.0
+website: rypofalem.github.io
+author: RypoFalem
+description: Grants extra bonuses to beacons
+commands:
+  beacon:
+    description: Gives information about beacon regions you are standing in
+    usage: /<command> 
