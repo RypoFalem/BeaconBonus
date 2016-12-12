@@ -6,10 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
@@ -163,7 +160,7 @@ public class BeaconBonusPlugin extends JavaPlugin implements Listener{
 	}
 
 	boolean addBeacon(BonusBeacon beacon){
-		if(beacon.tier < 1){
+		if(beacon.tier < 1 || beacon.block.getWorld().getEnvironment() != World.Environment.NORMAL){
 			removeBeacon(beacon);
 			return false;
 		}
@@ -226,6 +223,5 @@ public class BeaconBonusPlugin extends JavaPlugin implements Listener{
 	public static BeaconBonusPlugin getInstance(){
 		return plugin;
 	}
-
 
 }
