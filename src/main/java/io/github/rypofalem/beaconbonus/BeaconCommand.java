@@ -40,7 +40,13 @@ public class BeaconCommand implements CommandExecutor{
 				info = info + "\n" + getBeaconInfo(beacon);
 			}
 		}
-		if(info == null) info = String.format("%sYou are not in range of any bonus beacons.", ChatColor.GREEN.toString());
+		if(info == null){
+			info = String.format("%sYou are not in range of any bonus beacons." +
+					"\nTo create one, build a beacon on a pyramid of glowstone or sea lanterns and right click the beacon.",
+					ChatColor.GREEN.toString());
+		}else{
+			info = String.format("%s\n%sNatural mob spawns will be blocked in the above ranges.", info, ChatColor.DARK_GREEN);
+		}
 		player.sendMessage(info);
 		return true;
 	}

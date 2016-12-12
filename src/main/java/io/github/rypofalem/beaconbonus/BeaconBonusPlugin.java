@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -79,7 +80,9 @@ public class BeaconBonusPlugin extends JavaPlugin implements Listener{
 			if(beacons.containsKey(e.getClickedBlock())){
 				beacons.get(e.getClickedBlock()).scheduleUpdate();
 			}else{
-				addBeacon(e.getClickedBlock());
+				if(addBeacon(e.getClickedBlock())){
+					e.getPlayer().sendMessage(String.format("%sBonus beacon created!", ChatColor.GREEN));
+				}
 			}
 		}
 	}
@@ -87,7 +90,9 @@ public class BeaconBonusPlugin extends JavaPlugin implements Listener{
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled= true)
 	void onPlayerPlaceBeaconRelated(BlockPlaceEvent e){
 		if(e.getBlock().getType().equals(Material.BEACON)){
-			addBeacon(e.getBlock());
+			if(addBeacon(e.getBlock())){
+				e.getPlayer().sendMessage(String.format("%sBonus beacon created!", ChatColor.GREEN));
+			}
 		}
 		if(isLightBlock(e.getBlock().getType())){
 			updateNearbyBeacons(e.getBlock().getLocation(), 9);
@@ -157,18 +162,19 @@ public class BeaconBonusPlugin extends JavaPlugin implements Listener{
 		return false;
 	}
 
-	void addBeacon(BonusBeacon beacon){
+	boolean addBeacon(BonusBeacon beacon){
 		if(beacon.tier < 1){
 			removeBeacon(beacon);
-			return;
+			return false;
 		}
 		beacons.put(beacon.block, beacon);
 		getConfig().set("beacons." + beacon.getID() + ".tier", beacon.tier);
 		saveConfig();
+		return true;
 	}
 
-	void addBeacon(Block block){
-		addBeacon(new BonusBeacon(block));
+	boolean addBeacon(Block block){
+		return addBeacon(new BonusBeacon(block));
 	}
 
 	void removeBeacon(BonusBeacon beacon){
