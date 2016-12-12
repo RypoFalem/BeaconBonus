@@ -58,13 +58,13 @@ public class BeaconBonusPlugin extends JavaPlugin implements Listener{
 				y = Integer.parseInt(beaconInfo[2]);
 				z = Integer.parseInt(beaconInfo[3]);
 			} catch (Exception e) {
-				if(beacon != null) print(String.format("whoops, beaconID %s is invalid", beacon));
+				if(beacon != null) getLogger().info(String.format("whoops, beaconID %s is invalid", beacon));
 				e.printStackTrace();
 				continue;
 			}
 			
 			if(Bukkit.getWorld(world) == null){
-				print(String.format("Invalid world '%s' in %s", world, beacon));
+				getLogger().info(String.format("Invalid world '%s' in %s", world, beacon));
 				continue;
 			}
 			Block beaconBlock = Bukkit.getWorld(world).getBlockAt(x, y, z);
@@ -114,7 +114,6 @@ public class BeaconBonusPlugin extends JavaPlugin implements Listener{
 			if(e.getEntityType() == type){
 				if(isInBeaconRange(e.getLocation())){
 					e.setCancelled(true);
-					print("Event Cancelled: " +e.getEntityType().name());
 				}
 				return;
 			}
@@ -216,10 +215,6 @@ public class BeaconBonusPlugin extends JavaPlugin implements Listener{
 			if(beacons.get(key).isInRange(loc, range)) beaconsInRange.add(beacons.get(key));
 		}
 		return beaconsInRange;
-	}
-
-	void print(String message){
-		if(debug) Bukkit.getServer().broadcastMessage(message);
 	}
 	
 	public static BeaconBonusPlugin getInstance(){

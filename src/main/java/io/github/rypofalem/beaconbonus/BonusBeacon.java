@@ -106,9 +106,7 @@ public class BonusBeacon {
 		}
 		int oldTier = tier;
 		tier = calculateTier();
-		BeaconBonusPlugin.getInstance().print("Old tier: " + oldTier);
 		if(calculateTier() != oldTier){
-			BeaconBonusPlugin.getInstance().print("New Tier: " + tier);
 			calculateCorners();
 			BeaconBonusPlugin.getInstance().addBeacon(this);
 		}
